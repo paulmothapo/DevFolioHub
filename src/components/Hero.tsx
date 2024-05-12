@@ -12,9 +12,9 @@ const HeroSection: React.FC = () => {
             Showcase your personal portfolio website and get discovered by potential clients and employers.
           </p>
           <div className="mt-10 flex justify-center">
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-md font-semibold">
+            <a href="/submit" className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-md font-semibold">
               Get Started
-            </button>
+            </a>
           </div>
         </div>
       </div>
