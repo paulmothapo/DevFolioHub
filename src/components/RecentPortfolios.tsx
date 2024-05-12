@@ -1,41 +1,46 @@
-// components/RecentPortfolios.tsx
-import React from 'react';
+'use client';
+import React, { useState, useEffect } from 'react';
 import PortfolioCard from './PortfolioCard';
+import prisma from '../app/lib/prisma';
 
-// Dummy data for demonstration purposes
-const recentPortfolios = [
-  {
-    id: '5',
-    title: 'Portfolio Website 5',
-    developer: 'Emily Wilson',
-    tags: ['React', 'Tailwind CSS', 'Express'],
-    thumbnail: 'https://via.placeholder.com/300x200',
-  },
-  {
-    id: '6',
-    title: 'Portfolio Website 6',
-    developer: 'Michael Brown',
-    tags: ['Vue.js', 'Bootstrap', 'Node.js'],
-    thumbnail: 'https://via.placeholder.com/300x200',
-  },
-  // Add more recent portfolio data here
-];
+interface Portfolio {
+  id: number;
+  title: string;
+  developer: string;
+  tags: string[];
+  thumbnail: string;
+}
 
 const RecentPortfolios: React.FC = () => {
+  const [recentPortfolios, setRecentPortfolios] = useState<Portfolio[]>([]);
+
+  useEffect(() => {
+    const fetchRecentPortfolios = async () => {
+      try {
+        const response = await fetch('/api/portfolios/recent');
+        const data = await response.json();
+  
+        const sortedData = data.slice().reverse(); 
+        setRecentPortfolios(sortedData.slice(0, 6));
+      } catch (error) {
+        console.error('Error fetching recent portfolios:', error);
+      }
+    };
+
+    fetchRecentPortfolios();
+  }, []);
+
   return (
     <section className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-4">Recently Added Portfolios</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {recentPortfolios.map((portfolio) => (
-          <PortfolioCard
-            key={portfolio.id}
-            id={portfolio.id}
-            title={portfolio.title}
-            developer={portfolio.developer}
-            tags={portfolio.tags}
-            thumbnail={portfolio.thumbnail}
-          />
-        ))}
+        {recentPortfolios.length > 0 &&
+          recentPortfolios.map((portfolio) => (
+            <PortfolioCard
+              key={portfolio.id}
+              {...portfolio}
+            />
+          ))}
       </div>
     </section>
   );

@@ -1,38 +1,37 @@
-// components/FeaturedPortfolios.tsx
-import React from 'react';
-import PortfolioCard from './PortfolioCard';
+'use client'
 
-// Dummy data for demonstration purposes
-const featuredPortfolios = [
-  {
-    id: '1',
-    title: 'Portfolio Website 1',
-    developer: 'John Doe',
-    tags: ['React', 'Tailwind CSS', 'Node.js'],
-    thumbnail: 'https://via.placeholder.com/300x200',
-  },
-  {
-    id: '2',
-    title: 'Portfolio Website 2',
-    developer: 'Jane Smith',
-    tags: ['Vue.js', 'Sass', 'Express'],
-    thumbnail: 'https://via.placeholder.com/300x200',
-  },
-  // Add more featured portfolio data here
-];
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import PortfolioCard from '../components/PortfolioCard';
 
 const FeaturedPortfolios: React.FC = () => {
+  const [portfolios, setPortfolios] = useState([]);
+
+  useEffect(() => {
+    const fetchPortfolios = async () => {
+      try {
+        const response = await fetch('/api/portfolios');
+        const data = await response.json();
+        setPortfolios(data);
+      } catch (error) {
+        console.error('Error fetching portfolios:', error);
+      }
+    };
+
+    fetchPortfolios();
+  }, []);
+
   return (
     <section className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-4">Featured Portfolios</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {featuredPortfolios.map((portfolio) => (
+        {portfolios.map((portfolio) => (
           <PortfolioCard
             key={portfolio.id}
             id={portfolio.id}
-            title={portfolio.title}
+            title={portfolio.name}
             developer={portfolio.developer}
-            tags={portfolio.tags}
+            tags={portfolio.technologies}
             thumbnail={portfolio.thumbnail}
           />
         ))}
@@ -42,3 +41,4 @@ const FeaturedPortfolios: React.FC = () => {
 };
 
 export default FeaturedPortfolios;
+

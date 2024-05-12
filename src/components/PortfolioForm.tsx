@@ -7,6 +7,7 @@ const PortfolioForm: React.FC = () => {
   const [website, setWebsite] = useState("");
   const [technologies, setTechnologies] = useState<string[]>([]);
   const [newTechnology, setNewTechnology] = useState("");
+  const [thumbnail, setThumbnail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState(false);
 
@@ -20,7 +21,7 @@ const PortfolioForm: React.FC = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, description, website, technologies }),
+      body: JSON.stringify({ name, description, website, technologies, thumbnail }),
     });
 
     if (response.ok) {
@@ -33,6 +34,7 @@ const PortfolioForm: React.FC = () => {
       setWebsite("");
       setTechnologies([]);
       setNewTechnology("");
+      setThumbnail("");
 
     } else {
       console.error("Failed to submit portfolio");
@@ -147,6 +149,18 @@ const PortfolioForm: React.FC = () => {
           </button>
         </div>
       </div>
+      <div className="mb-4">
+          <label htmlFor="thumbnail" className="block text-gray-700 font-bold mb-2">
+            Thumbnail URL
+          </label>
+          <input
+            type="text"
+            id="thumbnail"
+            value={thumbnail}
+            onChange={(e) => setThumbnail(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
 
         <div className="flex items-center justify-between">
           <button

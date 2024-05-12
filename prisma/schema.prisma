@@ -13,6 +13,7 @@ model Portfolio {
   description  String?
   website      String
   technologies String[]
+  thumbnail    String
   createdAt    DateTime @default(now()) @db.Timestamp(6)
   updatedAt    DateTime @default(now()) @db.Timestamp(6)
 }
