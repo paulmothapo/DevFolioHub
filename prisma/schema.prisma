@@ -20,19 +20,19 @@ model Portfolio {
   createdAt    DateTime @default(now()) @db.Timestamp(6)
   updatedAt    DateTime @default(now()) @db.Timestamp(6)
   likes        Int?     @default(0)
+  like         like[]
 }
 
-model User {
-  id          Int      @id @default(autoincrement())
-  email       String   @unique
-  likes       Like[]
-
+model user {
+  id    Int    @id
+  email String @unique @db.VarChar(255)
+  like  like[]
 }
 
-model Like {
-  id          Int      @id @default(autoincrement())
-  portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
-  portfolioId Int
-  user        User      @relation(fields: [userId], references: [id])
-  userId      Int
+model like {
+  id          Int       @id @default(autoincrement())
+  portfolioid Int
+  userid      Int
+  Portfolio   Portfolio @relation(fields: [portfolioid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user        user      @relation(fields: [userid], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

@@ -1,6 +1,8 @@
-'use client'
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+"use client";
+import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import Header from "@/components/Header";
+import PortfolioDetails from "@/components/PortofolioMore";
 
 const PortfolioDetailPage: React.FC = () => {
   const { id } = useParams();
@@ -9,30 +11,49 @@ const PortfolioDetailPage: React.FC = () => {
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
-        if (id) {
-          const response = await fetch(`/api/portfolios/${id}`);
+        const response = await fetch(`/api/portfolios/details?id=${id}`);
+        if (response.ok) {
           const data = await response.json();
           setPortfolio(data);
+        } else {
+          console.error(
+            "Failed to fetch portfolio details:",
+            response.statusText
+          );
         }
       } catch (error) {
-        console.error('Error fetching portfolio:', error);
+        console.error("Error fetching portfolio details:", error);
       }
     };
 
-    fetchPortfolio();
+    if (id) {
+      fetchPortfolio();
+    }
   }, [id]);
 
-  if (!portfolio) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div>
-      <h1>{portfolio.name}</h1>
-      <p>Description: {portfolio.description}</p>
-      <p>Website: <a href={portfolio.website}>{portfolio.website}</a></p>
-      <p>Technologies: {portfolio.technologies}</p>
-    </div>
+    <>
+      <Header />
+      <div>
+        {portfolio ? (
+          <PortfolioDetails
+            name={portfolio.name}
+            description={portfolio.description}
+            technologies={portfolio.technologies}
+            thumbnail={portfolio.thumbnail}
+            github={portfolio.github}
+            website={portfolio.website}
+            twitter={portfolio.twitter}
+            email={portfolio.email}
+            likes={portfolio.likes}
+            liked={portfolio.liked}
+            handleLike={portfolio.handleLike}
+          />
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
+    </>
   );
 };
 
