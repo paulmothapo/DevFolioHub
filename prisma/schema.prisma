@@ -12,8 +12,11 @@ model Portfolio {
   name         String
   description  String?
   website      String
+  thumbnail    String?
+  github       String?
+  twitter      String?
+  email        String?
   technologies String[]
-  thumbnail    String
   createdAt    DateTime @default(now()) @db.Timestamp(6)
   updatedAt    DateTime @default(now()) @db.Timestamp(6)
 }

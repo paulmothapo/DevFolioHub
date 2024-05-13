@@ -1,4 +1,4 @@
-// browse.tsx
+'use client'
 import React from 'react';
 import Head from 'next/head';
 import Header from '../../components/Header';
@@ -13,14 +13,14 @@ const Browse: React.FC = () => {
       title: 'Portfolio Website 1',
       developer: 'John Doe',
       tags: ['React', 'Tailwind CSS', 'Node.js'],
-      thumbnail: 'https://via.placeholder.com/300x200',
+      thumbnail: 'https://ibb.co/M5hW9H7',
     },
     {
       id: '2',
       title: 'Portfolio Website 2',
       developer: 'Jane Smith',
       tags: ['Vue.js', 'Sass', 'Express'],
-      thumbnail: 'https://via.placeholder.com/300x200',
+      thumbnail: 'https://ibb.co/M5hW9H7',
     },
     // Add more portfolio data here
   ];

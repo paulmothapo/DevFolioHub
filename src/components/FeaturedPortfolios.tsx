@@ -20,6 +20,7 @@ const FeaturedPortfolios: React.FC = () => {
 
     fetchPortfolios();
   }, []);
+  
 
   return (
     <section className="container mx-auto px-4 py-8">
@@ -32,7 +33,7 @@ const FeaturedPortfolios: React.FC = () => {
             title={portfolio.name}
             developer={portfolio.developer}
             tags={portfolio.technologies}
-            thumbnail={portfolio.thumbnail}
+            thumbnail={portfolio.thumbnail} 
           />
         ))}
       </div>
@@ -41,4 +42,5 @@ const FeaturedPortfolios: React.FC = () => {
 };
 
 export default FeaturedPortfolios;
+
 

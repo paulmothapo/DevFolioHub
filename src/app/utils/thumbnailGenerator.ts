@@ -1,14 +1,12 @@
-import prisma from '../../../lib/prisma';
 import puppeteer from "puppeteer";
 import path from "path";
+import fs from "fs";
 
 const THUMBNAIL_WIDTH = 640;
 const THUMBNAIL_HEIGHT = 360;
 const THUMBNAIL_DIR = "public/thumbnails";
 
-export async function POST(request) {
-  const { name, description, website, technologies, thumbnail, github, email, twitter } = await request.json();
-  
+export const generateThumbnail = async (website: string): Promise<string> => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -20,18 +18,5 @@ export async function POST(request) {
 
   await browser.close();
 
-
-  const portfolio = await prisma.portfolio.create({
-    data: {
-      name,
-      email,
-      description,
-      website,
-      technologies,
-      thumbnail: path.basename(thumbnailPath),
-      github,
-      twitter,
-    },
-  });
-  return new Response(JSON.stringify(portfolio), { status: 201 });
-}
+  return thumbnailPath;
+};

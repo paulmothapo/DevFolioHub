@@ -1,12 +1,14 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 interface PortfolioCardProps {
   id: number;
   title: string;
   developer: string;
   tags: string[];
-  thumbnail: string; 
+  thumbnail: string;
+  website: string;
 }
 
 const PortfolioCard: React.FC<PortfolioCardProps> = ({
@@ -14,12 +16,19 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
   title,
   tags = [],
   thumbnail,
+  website,
 }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <Link href={`/portfolio/${id}`} legacyBehavior>
         <a>
-        <img src={thumbnail} alt={title} className="w-full h-48 object-cover" />
+          <Image
+            src={`/thumbnails/${thumbnail}`}
+            alt={title}
+            width={640}
+            height={360}
+            className="w-full h-48 object-cover"
+          />
         </a>
       </Link>
       <div className="p-4">
@@ -29,14 +38,15 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
           </Link>
         </h3>
         <div className="mt-2">
-          {tags && tags.map((tag, index) => (
-            <span
-              key={index}
-              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
-            >
-              {tag}
-            </span>
-          ))}
+          {tags &&
+            tags.map((tag, index) => (
+              <span
+                key={index}
+                className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+              >
+                {tag}
+              </span>
+            ))}
         </div>
       </div>
     </div>

@@ -5,9 +5,12 @@ const PortfolioForm: React.FC = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [website, setWebsite] = useState("");
+  const [thumbnail, setThumbnail] = useState("");
+  const [github, setGithub] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [email, setEmail] = useState("");
   const [technologies, setTechnologies] = useState<string[]>([]);
   const [newTechnology, setNewTechnology] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState(false);
 
@@ -21,21 +24,21 @@ const PortfolioForm: React.FC = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, description, website, technologies, thumbnail }),
+      body: JSON.stringify({ name, description, website, thumbnail, github, twitter, email, technologies }),
     });
 
     if (response.ok) {
-
       console.log("Portfolio submitted successfully");
-
       setIsSubmitted(true);
       setName("");
       setDescription("");
       setWebsite("");
+      setThumbnail("");
+      setGithub("");
+      setTwitter("");
+      setEmail("");
       setTechnologies([]);
       setNewTechnology("");
-      setThumbnail("");
-
     } else {
       console.error("Failed to submit portfolio");
       setSubmitError(true);
@@ -87,6 +90,18 @@ const PortfolioForm: React.FC = () => {
             onChange={(e) => setName(e.target.value)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
 
@@ -158,6 +173,31 @@ const PortfolioForm: React.FC = () => {
             id="thumbnail"
             value={thumbnail}
             onChange={(e) => setThumbnail(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="github" className="block text-gray-700 font-bold mb-2">
+            GitHub Profile
+          </label>
+          <input
+            type="text"
+            id="github"
+            value={github}
+            onChange={(e) => setGithub(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="twitter" className="block text-gray-700 font-bold mb-2">
+            Twitter Profile <span className="font-normal text-sm">(Optional)</span>
+          </label>
+          <input
+            type="text"
+            id="twitter"
+            value={twitter}
+            onChange={(e) => setTwitter(e.target.value)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
