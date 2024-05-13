@@ -153,7 +153,6 @@ const PortfolioForm: React.FC = () => {
           <input
             type="text"
             value={newTechnology}
-            required
             onChange={(e) => setNewTechnology(e.target.value)}
             className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
             placeholder="Add new technology"
@@ -167,6 +166,18 @@ const PortfolioForm: React.FC = () => {
           </button>
         </div>
       </div>
+      <div className="mb-4">
+          <label htmlFor="thumbnail" className="block text-gray-700 font-bold mb-2">
+            Thumbnail URL
+          </label>
+          <input
+            type="text"
+            id="thumbnail"
+            value={thumbnail}
+            onChange={(e) => setThumbnail(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
         <div className="mb-4">
           <label htmlFor="github" className="block text-gray-700 font-bold mb-2">
             GitHub Profile
