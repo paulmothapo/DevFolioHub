@@ -16,14 +16,13 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
   title,
   tags = [],
   thumbnail,
-  website,
 }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <Link href={`/portfolio/${id}`} legacyBehavior>
         <a>
           <Image
-            src={`/thumbnails/${thumbnail}`}
+            src={thumbnail.startsWith("data:") ? thumbnail : `/thumbnails/${thumbnail}`}
             alt={title}
             width={640}
             height={360}
