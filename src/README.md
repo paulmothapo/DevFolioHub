@@ -60,7 +60,10 @@ DELETE FROM "Portfolio"
 WHERE id = 1;
 ```
 
-Replace placeholders (e.g., `your_username`, `your_password`, `your_database_name`) with actual connection details, and customize queries with specific data as needed.
+
+ ### Adding a new column or entry
+ALTER TABLE "Portfolio"
+ADD COLUMN likes INTEGER DEFAULT 0;
 
 ---
 

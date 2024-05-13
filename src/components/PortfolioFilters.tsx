@@ -1,4 +1,5 @@
-// components/PortfolioFilters.tsx
+'use client'
+
 import React, { useState } from 'react';
 
 const PortfolioFilters: React.FC = () => {
@@ -8,17 +9,6 @@ const PortfolioFilters: React.FC = () => {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-  };
-
-  const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const tag = e.target.value;
-    const isChecked = e.target.checked;
-
-    if (isChecked) {
-      setTags([...tags, tag]);
-    } else {
-      setTags(tags.filter((t) => t !== tag));
-    }
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -40,34 +30,6 @@ const PortfolioFilters: React.FC = () => {
             className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
             placeholder="Search portfolios..."
           />
-        </div>
-        <div className="mb-4 md:mb-0">
-          <label className="font-semibold mr-2">Tags:</label>
-          <div className="flex flex-wrap">
-            <div className="mr-2 mb-2">
-              <label>
-                <input
-                  type="checkbox"
-                  value="React"
-                  onChange={handleTagChange}
-                  className="mr-1"
-                />
-                React
-              </label>
-            </div>
-            <div className="mr-2 mb-2">
-              <label>
-                <input
-                  type="checkbox"
-                  value="Vue.js"
-                  onChange={handleTagChange}
-                  className="mr-1"
-                />
-                Vue.js
-              </label>
-            </div>
-            {/* Add more tag checkboxes here */}
-          </div>
         </div>
         <div>
           <label htmlFor="sortBy" className="font-semibold mr-2">

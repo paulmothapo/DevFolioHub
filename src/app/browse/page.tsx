@@ -1,29 +1,27 @@
 'use client'
-import React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Header from '../../components/Header';
 import PortfolioFilters from '../../components/PortfolioFilters';
 import PortfolioCard from '../../components/PortfolioCard';
 
 const Browse: React.FC = () => {
-  // Dummy data for demonstration purposes
-  const portfolios = [
-    {
-      id: '1',
-      title: 'Portfolio Website 1',
-      developer: 'John Doe',
-      tags: ['React', 'Tailwind CSS', 'Node.js'],
-      thumbnail: 'https://ibb.co/M5hW9H7',
-    },
-    {
-      id: '2',
-      title: 'Portfolio Website 2',
-      developer: 'Jane Smith',
-      tags: ['Vue.js', 'Sass', 'Express'],
-      thumbnail: 'https://ibb.co/M5hW9H7',
-    },
-    // Add more portfolio data here
-  ];
+  const [portfolios, setPortfolios] = useState([]);
+
+  useEffect(() => {
+    const fetchPortfolios = async () => {
+      try {
+        const response = await fetch('/api/portfolios');
+        const data = await response.json();
+        setPortfolios(data);
+      } catch (error) {
+        console.error('Error fetching portfolios:', error);
+      }
+    };
+
+    fetchPortfolios();
+  }, []);
 
   return (
     <>

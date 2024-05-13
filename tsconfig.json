@@ -21,6 +21,6 @@
       "@/*": ["./src/*", "./src/components/*", "./src/components/*.{js,ts,jsx,tsx,mdx}"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/portfolios/create/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/portfolios/create/route.js", "src/app/api/portfolios/like/route.js", "src/app/api/portfolios/like/count/route.js", "src/app/api/portfolios/top/route.js"],
   "exclude": ["node_modules"]
 }

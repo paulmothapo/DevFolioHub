@@ -1,7 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import PortfolioCard from './PortfolioCard';
-import prisma from '../app/lib/prisma';
 
 const TopPortfolios: React.FC = () => {
   const [portfolios, setPortfolios] = useState<any[]>([]);
@@ -9,14 +8,13 @@ const TopPortfolios: React.FC = () => {
   useEffect(() => {
     const fetchPortfolios = async () => {
       try {
-        const response = await fetch('/api/portfolios');
+        const response = await fetch('/api/portfolios/top');
         const data = await response.json();
         setPortfolios(data);
       } catch (error) {
         console.error('Error fetching top portfolios:', error);
       }
     };
-
     fetchPortfolios();
   }, []);
 
@@ -29,9 +27,9 @@ const TopPortfolios: React.FC = () => {
             key={portfolio.id}
             id={portfolio.id}
             title={portfolio.name}
-            developer={portfolio.developer}
             tags={portfolio.technologies}
             thumbnail={portfolio.thumbnail}
+            likes={portfolio.likes}
           />
         ))}
       </div>
@@ -40,3 +38,5 @@ const TopPortfolios: React.FC = () => {
 };
 
 export default TopPortfolios;
+
+
