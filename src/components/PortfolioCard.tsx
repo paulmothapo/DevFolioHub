@@ -1,14 +1,12 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import LikeButton from "./LikeButton";
 
 interface PortfolioCardProps {
   id: number;
   title: string;
   tags: string[];
-  thumbnail: string;
   likes: number;
 }
 
@@ -16,10 +14,38 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
   id,
   title,
   tags = [],
-  thumbnail,
+  likes,
 }) => {
-  const [likes, setLikes] = useState<number>(0);
   const [liked, setLiked] = useState<boolean>(false);
+  const [thumbnail, setThumbnail] = useState<string>("");
+
+  useEffect(() => {
+    const fetchThumbnail = async () => {
+      try {
+        const response = await fetch(`/api/portfolios/thumbnail?id=${id}`);
+        if (response.ok) {
+          const blob = await response.blob();
+          const objectURL = URL.createObjectURL(blob);
+          setThumbnail(objectURL);
+        } else {
+          console.error(
+            "Failed to fetch thumbnail for portfolio entry:",
+            response.statusText
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching thumbnail for portfolio entry:", error);
+      }
+    };
+    fetchThumbnail();
+  
+    return () => {
+      if (thumbnail) {
+        URL.revokeObjectURL(thumbnail);
+      }
+    };
+  }, [id]);
+
 
   const handleLike = async () => {
     try {
@@ -29,10 +55,9 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id }),
+        
       });
       if (response.ok) {
-        const data = await response.json();
-        setLikes(data.likes);
         setLiked(true);
       } else {
         console.error("Failed to like portfolio entry:", response.statusText);
@@ -46,13 +71,12 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
     const fetchLikeCount = async () => {
       try {
         const response = await fetch(`/api/portfolios/like/count?id=${id}`);
-        const data = await response.json();
-        if (response.ok) {
-          setLikes(data.likes);
-        } else {
+
+        
+        if (!response.ok) {
           console.error(
             "Failed to fetch like count for portfolio entry:",
-            data.error
+            response.statusText
           );
         }
       } catch (error) {
@@ -77,15 +101,9 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
         legacyBehavior
       >
         <a>
-          <Image
-            src={
-              thumbnail.startsWith("data:")
-                ? thumbnail
-                : `/thumbnails/${thumbnail}`
-            }
+          <img
+            src={thumbnail} 
             alt={title}
-            width={640}
-            height={360}
             className="w-full h-48 object-cover"
           />
         </a>
@@ -118,17 +136,11 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
               </span>
             ))}
         </div>
-        <button
-          onClick={handleLike}
-          className={`mt-4 ${
-            liked ? "text-blue-500" : "text-gray-400"
-          } text-sm`}
-        >
-          {likes} - {liked ? "liked" : "likes"}
-        </button>
+       <LikeButton liked={liked} likes={likes} handleLike={handleLike}/>
       </div>
     </div>
   );
 };
 
 export default PortfolioCard;
+

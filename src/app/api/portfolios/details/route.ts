@@ -19,7 +19,8 @@ export async function GET(req: NextRequest) {
         technologies: true,
         createdAt: true,
         updatedAt: true,
-        likes: true
+        likes: true,
+        like: true,
       }
     })
     return NextResponse.json(portfolio)
@@ -28,5 +29,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Failed to fetch portfolio details' }, { status: 500 })
   }
 }
-
 

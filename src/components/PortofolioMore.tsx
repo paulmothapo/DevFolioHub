@@ -1,11 +1,11 @@
 import React from "react";
-import Image from "next/image";
+import LikeButton from "./LikeButton";
 
 interface PortfolioDetailsProps {
   name: string;
   description: string;
   technologies: string[];
-  thumbnail: string;
+  thumbnail: string | null; 
   github: string;
   website: string;
   twitter: string;
@@ -29,17 +29,23 @@ const PortfolioDetails: React.FC<PortfolioDetailsProps> = ({
   handleLike,
 }) => {
   return (
-    <div className="overflow-hidden mt-20 md:flex ">
+    <div className="overflow-hidden mt-40 md:flex ">
       <div className="md:w-1/2">
         <div className="p-4">
           <div className="">
-            <Image
-              src={thumbnail.startsWith("data:") ? thumbnail : `/thumbnails/${thumbnail}`}
-              alt={name}
-              width={640}
-              height={560}
-              className="w-full h-2/6 shadow-xl rounded-2xl  md:h-auto "
-            />
+            {thumbnail ? (
+              <img
+                src={thumbnail}
+                alt={name}
+                width={640}
+                height={560}
+                className="w-full h-2/6 shadow-xl rounded-2xl md:h-auto"
+              />
+            ) : (
+              <div className="w-full h-2/6 shadow-xl rounded-2xl md:h-auto bg-gray-300 flex items-center justify-center">
+                <p>No thumbnail available</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -48,17 +54,26 @@ const PortfolioDetails: React.FC<PortfolioDetailsProps> = ({
         <p className="mb-4 font-bold text-4xl py-10">{description}</p>
         <div className="flex flex-wrap gap-4 mb-4 ">
           {github && (
-            <a href={github} className="hover:text-purple-600 border-b-4 border-b-purple-600 font-semibold">
+            <a
+              href={github}
+              className="hover:text-purple-600 border-b-4 border-b-purple-600 font-semibold"
+            >
               GitHub
             </a>
           )}
           {website && (
-            <a href={website} className="hover:text-purple-600 border-b-4 border-b-purple-600 font-semibold">
+            <a
+              href={website}
+              className="hover:text-purple-600 border-b-4 border-b-purple-600 font-semibold"
+            >
               Website
             </a>
           )}
           {twitter && (
-            <a href={twitter} className="hover:text-purple-600 border-b-4 border-b-purple-600 font-semibold">
+            <a
+              href={twitter}
+              className="hover:text-purple-600 border-b-4 border-b-purple-600 font-semibold"
+            >
               Twitter
             </a>
           )}
@@ -78,14 +93,7 @@ const PortfolioDetails: React.FC<PortfolioDetailsProps> = ({
             </span>
           ))}
         </div>
-        <button
-            onClick={handleLike}
-            className={`mt-4 ${
-              liked ? "text-blue-500" : "text-gray-400"
-            } text-sm`}
-          >
-            {likes} - {liked ? "liked" : "likes"}
-          </button>
+        <LikeButton likes={likes} liked={liked} handleLike={handleLike}/>
       </div>
     </div>
   );

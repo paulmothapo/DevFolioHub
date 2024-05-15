@@ -5,7 +5,7 @@ const PortfolioForm: React.FC = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [website, setWebsite] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
+  const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [github, setGithub] = useState("");
   const [twitter, setTwitter] = useState("");
   const [email, setEmail] = useState("");
@@ -18,32 +18,49 @@ const PortfolioForm: React.FC = () => {
     e.preventDefault();
     setIsSubmitted(false);
     setSubmitError(false);
-
-    const response = await fetch("/api/portfolios/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, description, website, thumbnail, github, twitter, email, technologies }),
-    });
-
-    if (response.ok) {
-      console.log("Portfolio submitted successfully");
-      setIsSubmitted(true);
-      setName("");
-      setDescription("");
-      setWebsite("");
-      setThumbnail("");
-      setGithub("");
-      setTwitter("");
-      setEmail("");
-      setTechnologies([]);
-      setNewTechnology("");
-    } else {
-      console.error("Failed to submit portfolio");
+  
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("website", website);
+    if (thumbnail) {
+      formData.append("thumbnail", thumbnail); 
+    }
+    formData.append("github", github);
+    formData.append("twitter", twitter);
+    formData.append("email", email);
+    formData.append("technologies", JSON.stringify(technologies));
+  
+    try {
+      const response = await fetch("/api/portfolios/create", {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (response.ok) {
+        console.log("Portfolio submitted successfully");
+        setIsSubmitted(true);
+        setName("");
+        setDescription("");
+        setWebsite("");
+        setThumbnail(null);
+        setGithub("");
+        setTwitter("");
+        setEmail("");
+        setTechnologies([]);
+        setNewTechnology("");
+      } else {
+        console.error("Failed to submit portfolio");
+        setSubmitError(true);
+      }
+    } catch (error) {
+      console.error("Error submitting portfolio:", error);
       setSubmitError(true);
     }
   };
+  
+  
+  
 
   const handleTechnologyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
@@ -67,14 +84,21 @@ const PortfolioForm: React.FC = () => {
   return (
     <div className="max-w-md mx-auto">
       {isSubmitted && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" role="alert">
+        <div
+          className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4"
+          role="alert"
+        >
           <strong>Success!</strong> Your portfolio has been submitted.
         </div>
       )}
 
       {submitError && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
-          <strong>Error!</strong> Failed to submit your portfolio. Please try again.
+        <div
+          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
+          role="alert"
+        >
+          <strong>Error!</strong> Failed to submit your portfolio. Please try
+          again.
         </div>
       )}
 
@@ -107,7 +131,10 @@ const PortfolioForm: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="description" className="block text-gray-700 font-bold mb-2">
+          <label
+            htmlFor="description"
+            className="block text-gray-700 font-bold mb-2"
+          >
             Description
           </label>
           <textarea
@@ -120,7 +147,10 @@ const PortfolioForm: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="website" className="block text-gray-700 font-bold mb-2">
+          <label
+            htmlFor="website"
+            className="block text-gray-700 font-bold mb-2"
+          >
             Website
           </label>
           <input
@@ -134,52 +164,60 @@ const PortfolioForm: React.FC = () => {
         </div>
 
         <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Technologies</label>
-        <div>
-          {technologies.map((tech, index) => (
-            <label key={index} className="inline-flex items-center mr-4">
-              <input
-                type="checkbox"
-                value={tech}
-                checked={technologies.includes(tech)}
-                onChange={handleTechnologyChange}
-                className="form-checkbox"
-              />
-              <span className="ml-2">{tech}</span>
-            </label>
-          ))}
+          <label className="block text-gray-700 font-bold mb-2">
+            Technologies
+          </label>
+          <div>
+            {technologies.map((tech, index) => (
+              <label key={index} className="inline-flex items-center mr-4">
+                <input
+                  type="checkbox"
+                  value={tech}
+                  checked={technologies.includes(tech)}
+                  onChange={handleTechnologyChange}
+                  className="form-checkbox"
+                />
+                <span className="ml-2">{tech}</span>
+              </label>
+            ))}
+          </div>
+          <div className="flex items-center">
+            <input
+              type="text"
+              value={newTechnology}
+              onChange={(e) => setNewTechnology(e.target.value)}
+              className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
+              placeholder="Add new technology"
+            />
+            <button
+              type="button"
+              onClick={addNewTechnology}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Add
+            </button>
+          </div>
         </div>
-        <div className="flex items-center">
-          <input
-            type="text"
-            value={newTechnology}
-            onChange={(e) => setNewTechnology(e.target.value)}
-            className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
-            placeholder="Add new technology"
-          />
-          <button
-            type="button"
-            onClick={addNewTechnology}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        <div className="mb-4">
+          <label
+            htmlFor="thumbnail"
+            className="block text-gray-700 font-bold mb-2"
           >
-            Add
-          </button>
-        </div>
-      </div>
-      <div className="mb-4">
-          <label htmlFor="thumbnail" className="block text-gray-700 font-bold mb-2">
-            Thumbnail URL
+            Thumbnail Image
           </label>
           <input
-            type="text"
+            type="file"
             id="thumbnail"
-            value={thumbnail}
-            onChange={(e) => setThumbnail(e.target.value)}
+            accept="image/*"
+            onChange={(e) => setThumbnail(e.target.files?.[0] ?? null)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="github" className="block text-gray-700 font-bold mb-2">
+          <label
+            htmlFor="github"
+            className="block text-gray-700 font-bold mb-2"
+          >
             GitHub Profile
           </label>
           <input
@@ -193,8 +231,12 @@ const PortfolioForm: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="twitter" className="block text-gray-700 font-bold mb-2">
-            Twitter Profile <span className="font-normal text-sm">(Optional)</span>
+          <label
+            htmlFor="twitter"
+            className="block text-gray-700 font-bold mb-2"
+          >
+            Twitter Profile{" "}
+            <span className="font-normal text-sm">(Optional)</span>
           </label>
           <input
             type="text"
@@ -219,3 +261,5 @@ const PortfolioForm: React.FC = () => {
 };
 
 export default PortfolioForm;
+
+

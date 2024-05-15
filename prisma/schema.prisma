@@ -12,7 +12,7 @@ model Portfolio {
   name         String
   description  String?
   website      String
-  thumbnail    String?
+  thumbnail    Bytes?
   github       String?
   twitter      String?
   email        String?
