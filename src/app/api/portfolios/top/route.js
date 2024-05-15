@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/app/lib/prisma'
 
-export const config = {
+export const runtime = {
   runtime: 'edge',
 }
 
@@ -28,3 +28,4 @@ export async function GET() {
     return NextResponse.json({ error: 'Failed to fetch portfolios' }, { status: 500 })
   }
 }
+
