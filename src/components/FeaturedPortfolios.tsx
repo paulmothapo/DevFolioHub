@@ -33,7 +33,8 @@ const FeaturedPortfolios: React.FC = () => {
             title={portfolio.name}
             developer={portfolio.developer}
             tags={portfolio.technologies}
-            thumbnail={portfolio.thumbnail} 
+            thumbnail={portfolio.thumbnail}
+            likes={portfolio.likes} 
           />
         ))}
       </div>
