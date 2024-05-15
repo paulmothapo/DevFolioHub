@@ -39,7 +39,6 @@ const Browse: React.FC = () => {
               id={portfolio}
               title={portfolio}
               tags={portfolio}
-              // thumbnail={portfolio}
               likes={portfolio}
             />
           ))}
