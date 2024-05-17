@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import PortfolioCard from './PortfolioCard';
-import prisma from '../app/lib/prisma';
+import PortfolioCard from '@/main/sub-main/PortfolioCard';
+import prisma from '@/app/lib/prisma';
 
 interface Portfolio {
   id: number;
@@ -17,7 +17,7 @@ const RecentPortfolios: React.FC = () => {
   useEffect(() => {
     const fetchRecentPortfolios = async () => {
       try {
-        const response = await fetch('/api/portfolios/recent');
+        const response = await fetch('/api/portfolios');
         const data = await response.json();
   
         const sortedData = data.slice().reverse(); 
@@ -38,6 +38,7 @@ const RecentPortfolios: React.FC = () => {
           recentPortfolios.map((portfolio) => (
             <PortfolioCard
               key={portfolio.id}
+              likes={portfolio.id}
               {...portfolio}
             />
           ))}

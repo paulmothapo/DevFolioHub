@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { SparklesIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
-import PortfolioCount from './PortfolioCount';
+import PortfolioCount from '@/main/sub-main/PortfolioCount';
 
 const HeroSection: React.FC = () => {
   return (

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import LikeButton from "./LikeButton";
+import LikeButton from "@/buttons/LikeButton";
 
 interface PortfolioCardProps {
   id: number;
@@ -106,9 +106,9 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
             alt={title}
             className="w-full h-48 object-cover"
           />
-        </a>
+        </a>      
       </Link>
-      <div className="p-4">
+        <div className="p-4">
         <h3 className="text-lg font-bold">
           <Link
             href={{
@@ -126,15 +126,16 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
           </Link>
         </h3>
         <div className="mt-2">
-          {tags &&
-            tags.map((tag, index) => (
-              <span
-                key={index}
-                className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
-              >
-                {tag}
-              </span>
-            ))}
+          {Array.isArray(tags) &&
+  tags.map((tag, index) => (
+    <span
+      key={index}
+      className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+    >
+      {tag}
+    </span>
+  ))}
+
         </div>
        <LikeButton liked={liked} likes={likes} handleLike={handleLike}/>
       </div>

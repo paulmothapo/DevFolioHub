@@ -1,3 +1,5 @@
+//This is what allows us to establish a connection for our apip services for the database
+
 import { PrismaClient } from '@prisma/client';
 
 const prisma = global.prisma || new PrismaClient();

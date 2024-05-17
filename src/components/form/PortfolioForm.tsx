@@ -83,25 +83,6 @@ const PortfolioForm: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto">
-      {isSubmitted && (
-        <div
-          className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4"
-          role="alert"
-        >
-          <strong>Success!</strong> Your portfolio has been submitted.
-        </div>
-      )}
-
-      {submitError && (
-        <div
-          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
-          role="alert"
-        >
-          <strong>Error!</strong> Failed to submit your portfolio. Please try
-          again.
-        </div>
-      )}
-
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
@@ -256,6 +237,25 @@ const PortfolioForm: React.FC = () => {
           </button>
         </div>
       </form>
+
+      {isSubmitted && (
+        <div
+          className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4"
+          role="alert"
+        >
+          <strong>Success!</strong> Your portfolio has been submitted.
+        </div>
+      )}
+
+      {submitError && (
+        <div
+          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
+          role="alert"
+        >
+          <strong>Error!</strong> Failed to submit your portfolio. Please try
+          again.
+        </div>
+      )}
     </div>
   );
 };

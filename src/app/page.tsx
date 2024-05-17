@@ -1,9 +1,9 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import MainHero from "@/components/MainHero";
-import FeaturedPortfolios from "@/FeaturedPortfolios";
-import TopPortfolios from "@/TopPortfolios";
-import RecentPortfolios from "@/RecentPortfolios";
+import Header from "@/nav/Header";
+import Footer from "@/nav/Footer";
+import MainHero from "@/main/MainHero";
+import FeaturedPortfolios from "@/main/FeaturedPortfolios";
+import TopPortfolios from "@/main/TopPortfolios";
+import RecentPortfolios from "@/main/RecentPortfolios";
 
 export default function Home() {
   return (

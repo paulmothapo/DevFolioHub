@@ -1,5 +1,5 @@
 import React from "react";
-import HeroSection from "./Hero";
+import HeroSection from "@/main/sub-main/Hero";
 
 const Hero = () => {
   return (

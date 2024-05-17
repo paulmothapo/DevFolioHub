@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Header from "@/components/Header";
-import PortfolioDetails from "@/components/PortofolioMore";
+import Header from "@/nav/Header";
+import PortfolioDetails from "@/main/sub-main/PortofolioMore";
 
 const PortfolioDetailPage: React.FC = () => {
   const { id } = useParams();

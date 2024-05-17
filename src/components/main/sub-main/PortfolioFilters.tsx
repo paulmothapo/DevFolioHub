@@ -16,7 +16,7 @@ const PortfolioFilters: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-md shadow-md p-4 mb-4">
+    <div className="p-4 mb-4">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between">
         <div className="mb-4 md:mb-0">
           <label htmlFor="search" className="font-semibold mr-2">
@@ -44,7 +44,9 @@ const PortfolioFilters: React.FC = () => {
             <option value="">Default</option>
             <option value="latest">Latest</option>
             <option value="mostViewed">Most Viewed</option>
-            {/* Add more sorting options here */}
+            <option value="mostLiked">Most Liked</option>
+            <option value="lessViewed">Less Viewed</option>
+            <option value="lessLiked">Less Liked</option>
           </select>
         </div>
       </div>

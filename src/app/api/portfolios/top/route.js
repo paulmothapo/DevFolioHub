@@ -1,10 +1,6 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/app/lib/prisma'
 
-// export const runtime = {
-//   runtime: 'edge',
-// }
-
 export async function GET() {
   try {
     const portfolios = await prisma.portfolio.findMany({

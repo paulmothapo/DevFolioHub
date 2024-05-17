@@ -1,8 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import PortfolioCard from '../components/PortfolioCard';
+import PortfolioCard from '@/main/sub-main/PortfolioCard';
 
 const FeaturedPortfolios: React.FC = () => {
   const [portfolios, setPortfolios] = useState([]);
@@ -28,13 +27,13 @@ const FeaturedPortfolios: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {portfolios.map((portfolio) => (
           <PortfolioCard
-            key={portfolio.id}
-            id={portfolio.id}
-            title={portfolio.name}
-            developer={portfolio.developer}
-            tags={portfolio.technologies}
-            thumbnail={portfolio.thumbnail}
-            likes={portfolio.likes} 
+            key={portfolio}
+            id={portfolio}
+            title={portfolio}
+            // developer={portfolio.developer}
+            tags={portfolio}
+            // thumbnail={portfolio}
+            likes={portfolio} 
           />
         ))}
       </div>

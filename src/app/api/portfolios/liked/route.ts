@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     const liked = await prisma.like.findUnique({
       where: {
         portfolioId_userId: {
-          portfolioId: id,
+          portfolioid: id,
           userId
         }
       }
